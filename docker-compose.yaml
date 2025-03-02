@@ -1,0 +1,7 @@
+services:
+  whisper_test_bot:
+    container_name: whisper_test_bot1
+    restart: always
+    build: .
+    env_file: .env
+    command: [ "python", "bot.py" ]
