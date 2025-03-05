@@ -9,7 +9,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 # Вставьте ваш токен бота здесь
 dotenv.load_dotenv('.env')
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-WHISPER_SERVER_URL = os.environ.get("TELEGRAM_BOT_TOKEN")
+WHISPER_SERVER_URL = os.environ.get("WHISPER_SERVER_URL")
 # SERVER_URL = 'http://127.0.0.1:8000/transcribe'
 
 # Настройка логирования
@@ -21,7 +21,7 @@ import httpx
 
 async def send_audio_to_server(file_path):
     file_path = str(file_path)
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=60.0) as client:
         with open(file_path, 'rb') as f:
             audio_data = f.read()
         files = {'file': (file_path, audio_data, 'audio/mpeg')}
